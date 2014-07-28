@@ -68,13 +68,20 @@ var processTPs = function (obj) {
 
 var getKey = function(o)
 { 
-  return [unwrap(o["gsx$zone"]), unwrap(o["gsx$lga"]), unwrap(o["gsx$ward"]), unwrap(o["gsx$hf"])].join('-').toLowerCase(); 
+  return [unwrap(o["gsx$zone"]), unwrap(o["gsx$lga"]), unwrap(o["gsx$ward"])].join('-').toLowerCase().replace(" ","_").replace(".",""); 
 };
 
 var unwrap = function(o)
 {
-  if(typeof o !== 'undefined' && o.hasOwnProperty("$t"))
+  if(typeof o === 'undefined')
+  {
+    return o;
+  }
+
+  if(o.hasOwnProperty("$t"))
+  {
     return unwrap(o["$t"]);
+  }
   else
   {
     if(isNumeric(o))
